@@ -6,12 +6,13 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
 import "./styles/App.css";
 
 const App = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null); // State to store logged-in user data
 
   return (
     <Router>
@@ -21,8 +22,9 @@ const App = () => {
         <Route path="/about" element={<About />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
-        <Route path="/settings" element={<Settings />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/profile" element={<Profile user={user} />} />
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );

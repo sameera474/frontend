@@ -29,7 +29,7 @@ const Navbar = ({ user, setUser }) => {
           <div className="dropdown">
             <button className="dropdown-button">{user.name} ▼</button>
             <div className="dropdown-content">
-              <Link to="/profile">Profile</Link>
+              <Link to="/profile">Profile</Link> {/* Link to Profile page */}
               <button onClick={handleLogout} className="logout-button">
                 Logout
               </button>
