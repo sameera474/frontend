@@ -11,15 +11,14 @@ const Login = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
       });
-      const loggedInUser = response.data.user;
-
-      setUser(loggedInUser);
+      const { token, user } = response.data;
+      localStorage.setItem("token", token);
+      setUser(user);
       navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
@@ -35,7 +34,6 @@ const Login = ({ setUser }) => {
           Email:
           <input
             type="email"
-            name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -45,7 +43,6 @@ const Login = ({ setUser }) => {
           Password:
           <input
             type="password"
-            name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
