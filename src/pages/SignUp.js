@@ -10,7 +10,6 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [showConfirmation, setShowConfirmation] = useState(false); // State for confirmation popup
   const navigate = useNavigate();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -23,12 +22,10 @@ const SignUp = () => {
 
       // Show confirmation popup
       setShowConfirmation(true);
-
-      // Optional: Automatically navigate to login page after a few seconds
       setTimeout(() => {
         setShowConfirmation(false);
-        navigate("/login"); // Redirect to login page after successful signup
-      }, 3000); // 3 seconds delay
+        navigate("/login");
+      }, 3000);
     } catch (error) {
       console.error("Signup failed:", error);
       alert("Signup failed. Please try again.");

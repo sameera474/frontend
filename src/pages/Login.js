@@ -19,8 +19,8 @@ const Login = ({ setUser }) => {
       });
       const loggedInUser = response.data.user;
 
-      setUser(loggedInUser); // Update user state in App
-      navigate("/dashboard"); // Redirect to dashboard
+      setUser(loggedInUser);
+      navigate("/dashboard");
     } catch (error) {
       console.error("Login failed:", error);
       alert("Login failed. Please check your credentials.");

@@ -1,0 +1,65 @@
+/* src/styles/Dashboard.css */
+
+.dashboard {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.map-container {
+  margin-top: 20px;
+}
+
+.speedometer,
+.battery,
+.chart-container {
+  margin: 20px auto;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.battery-indicator {
+  height: 30px;
+  width: 100px;
+  border: 2px solid #000;
+  border-radius: 5px;
+  overflow: hidden;
+  position: relative;
+  margin: auto;
+}
+
+.battery-fill {
+  background-color: green;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.button {
+  margin: 5px;
+  padding: 10px 15px;
+  font-size: 1em;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+
+.chart-container {
+  max-width: 600px;
+  margin: 20px auto;
+}
