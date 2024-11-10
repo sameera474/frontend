@@ -1,15 +1,38 @@
 // src/pages/SignUp.js
 import React, { useState } from "react";
-import "./Form.css"; // Import Form.css for styling
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Form.css";
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showConfirmation, setShowConfirmation] = useState(false); // State for confirmation popup
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
+
+    try {
+      await axios.post("http://localhost:5000/api/signup", {
+        name,
+        email,
+        password,
+      });
+
+      // Show confirmation popup
+      setShowConfirmation(true);
+
+      // Optional: Automatically navigate to login page after a few seconds
+      setTimeout(() => {
+        setShowConfirmation(false);
+        navigate("/login"); // Redirect to login page after successful signup
+      }, 3000); // 3 seconds delay
+    } catch (error) {
+      console.error("Signup failed:", error);
+      alert("Signup failed. Please try again.");
+    }
   };
 
   return (
@@ -48,6 +71,19 @@ const SignUp = () => {
         </label>
         <button type="submit">Register</button>
       </form>
+
+      {showConfirmation && (
+        <div className="confirmation-popup">
+          <p>Signup successful! Redirecting to login...</p>
+        </div>
+      )}
+
+      <p style={{ marginTop: "20px" }}>
+        Already have an account?{" "}
+        <Link to="/login" style={{ color: "#007BFF" }}>
+          Login here
+        </Link>
+      </p>
     </div>
   );
 };

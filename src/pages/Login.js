@@ -1,14 +1,30 @@
 // src/pages/Login.js
 import React, { useState } from "react";
-import "./Form.css"; // Import Form.css for styling
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./Form.css";
 
-const Login = () => {
+const Login = ({ setUser }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle login logic here
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+      });
+      const loggedInUser = response.data.user;
+
+      setUser(loggedInUser); // Update user state in App
+      navigate("/dashboard"); // Redirect to dashboard
+    } catch (error) {
+      console.error("Login failed:", error);
+      alert("Login failed. Please check your credentials.");
+    }
   };
 
   return (

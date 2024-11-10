@@ -1,7 +1,13 @@
+// src/components/Navbar.js
 import React from "react";
 import { Link } from "react-router-dom";
+import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ user, setUser }) => {
+  const handleLogout = () => {
+    setUser(null); // Clear user data on logout
+  };
+
   return (
     <nav className="navbar">
       <ul>
@@ -12,18 +18,29 @@ const Navbar = () => {
           <Link to="/about">About</Link>
         </li>
         <li>
-          <Link to="/signup">Sign Up</Link>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-        <li>
           <Link to="/settings">Settings</Link>
         </li>
         <li>
           <Link to="/dashboard">Dashboard</Link>
         </li>
       </ul>
+      <div className="user-section">
+        {user ? (
+          <div className="dropdown">
+            <button className="dropdown-button">{user.name} ▼</button>
+            <div className="dropdown-content">
+              <Link to="/profile">Profile</Link>
+              <button onClick={handleLogout} className="logout-button">
+                Logout
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Link to="/login">Login</Link> | <Link to="/signup">Sign Up</Link>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
