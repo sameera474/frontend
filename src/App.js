@@ -6,6 +6,7 @@ import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import Settings from "./pages/Settings";
 import Dashboard from "./pages/Dashboard";
+import History from "./pages/History"; // Import History page
 import "./styles/App.css";
 
 const App = () => {
@@ -37,6 +38,10 @@ const App = () => {
           <Link to="/dashboard" style={{ margin: "0 10px" }}>
             Dashboard
           </Link>
+          <Link to="/history" style={{ margin: "0 10px" }}>
+            History
+          </Link>{" "}
+          {/* Add History link */}
         </nav>
 
         <Routes>
@@ -46,6 +51,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/history" element={<History />} />{" "}
+          {/* Add History route */}
         </Routes>
       </div>
     </Router>

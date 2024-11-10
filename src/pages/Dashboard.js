@@ -8,27 +8,19 @@ const Dashboard = () => {
   const [cuttingPattern, setCuttingPattern] = useState("Zigzag");
   const [labels, setLabels] = useState([]);
 
-  // Simulate data updates every few seconds
+  // Simulated data updates
   useEffect(() => {
     const interval = setInterval(() => {
-      const newSpeed = Math.floor(Math.random() * 10); // Simulate speed between 0-10 km/h
-      const newBattery = Math.max(0, 100 - speedData.length * 2); // Decrease battery over time
+      const newSpeed = Math.floor(Math.random() * 10);
+      const newBattery = Math.max(0, 100 - speedData.length * 2);
 
-      setSpeedData((prevData) => [...prevData, newSpeed]);
-      setBatteryData((prevData) => [...prevData, newBattery]);
-      setLabels((prevLabels) => [
-        ...prevLabels,
-        new Date().toLocaleTimeString(),
-      ]);
-
-      // Change cutting pattern every few updates
-      if (speedData.length % 5 === 0) {
-        setCuttingPattern(cuttingPattern === "Zigzag" ? "Spiral" : "Zigzag");
-      }
+      setSpeedData((prev) => [...prev, newSpeed]);
+      setBatteryData((prev) => [...prev, newBattery]);
+      setLabels((prev) => [...prev, new Date().toLocaleTimeString()]);
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [speedData, cuttingPattern]);
+  }, [speedData]);
 
   const data = {
     labels,
@@ -49,19 +41,30 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
+    <div className="dashboard container">
       <h1>Dashboard</h1>
-      <p>
-        View real-time data from your robotic lawnmower, including speed,
-        battery level, and cutting patterns.
-      </p>
-
-      <div style={{ maxWidth: "600px", margin: "auto" }}>
+      <p>View real-time data from your robotic lawnmower.</p>
+      <div className="chart-container">
         <Line data={data} />
       </div>
-
-      <div style={{ marginTop: "20px" }}>
+      <div>
         <h3>Current Cutting Pattern: {cuttingPattern}</h3>
+        <button
+          className="button"
+          onClick={() =>
+            setCuttingPattern((prev) =>
+              prev === "Zigzag" ? "Spiral" : "Zigzag"
+            )
+          }
+        >
+          Change Cutting Pattern
+        </button>
+        <button
+          className="button"
+          onClick={() => (window.location.href = "/history")}
+        >
+          View History Data
+        </button>
       </div>
     </div>
   );
