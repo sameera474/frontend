@@ -244,8 +244,6 @@
 //   );
 // };
 
-// export default Dashboard;
-
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Line } from "react-chartjs-2";
@@ -254,7 +252,6 @@ import Speedometer from "react-d3-speedometer";
 import "leaflet/dist/leaflet.css";
 import "chart.js/auto";
 import "../styles/Dashboard.css";
-// Import statements remain the same
 
 const Dashboard = ({ user }) => {
   const navigate = useNavigate();
@@ -276,9 +273,11 @@ const Dashboard = ({ user }) => {
   const [isMowerRunning, setIsMowerRunning] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [renderTrigger, setRenderTrigger] = useState(0);
+  const [mapCenter, setMapCenter] = useState([60.192059, 24.945831]); // Default to Helsinki
 
   const mowerStatus = isMowerRunning ? "Running" : "Stopped";
 
+  // Function to handle map click events for setting lawn area boundaries
   const MapClickHandler = () => {
     useMapEvents({
       click(e) {
@@ -287,6 +286,28 @@ const Dashboard = ({ user }) => {
     });
     return null;
   };
+
+  // Fetch the user's current location using the Geolocation API
+  useEffect(() => {
+    const getLocation = () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+            setMapCenter([latitude, longitude]);
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+          }
+        );
+      } else {
+        console.error("Geolocation is not supported by this browser.");
+      }
+    };
+
+    getLocation();
+  }, []);
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
@@ -410,11 +431,7 @@ const Dashboard = ({ user }) => {
       </div>
 
       <div className="map-container">
-        <MapContainer
-          center={[60.192059, 24.945831]}
-          zoom={13}
-          style={{ height: "300px" }}
-        >
+        <MapContainer center={mapCenter} zoom={13} style={{ height: "300px" }}>
           <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           <MapClickHandler />
           {polygon.length > 1 && <Polygon positions={polygon} color="blue" />}
